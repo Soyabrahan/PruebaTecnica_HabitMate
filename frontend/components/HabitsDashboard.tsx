@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Trash2 } from "lucide-react";
 import { motion, HTMLMotionProps } from "framer-motion";
 import {
   SlideInOnScroll,
@@ -50,6 +50,41 @@ export function HabitsDashboard() {
       ((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7
     );
     return `${d.getUTCFullYear()}-${weekNo < 10 ? "0" : ""}${weekNo}`;
+  };
+
+  // Helper para obtener el rango de fechas de la semana actual
+  const getCurrentWeekRange = () => {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 0=Domingo, 1=Lunes, ..., 6=Sábado
+    // Ajustar para que el lunes sea el primer día
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - ((dayOfWeek + 6) % 7));
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+
+    const meses = [
+      "enero",
+      "febrero",
+      "marzo",
+      "abril",
+      "mayo",
+      "junio",
+      "julio",
+      "agosto",
+      "septiembre",
+      "octubre",
+      "noviembre",
+      "diciembre",
+    ];
+    const diaInicio = monday.getDate();
+    const mesInicio = meses[monday.getMonth()];
+    const diaFin = sunday.getDate();
+    const mesFin = meses[sunday.getMonth()];
+    if (mesInicio === mesFin) {
+      return `Semana del ${diaInicio} al ${diaFin} de ${mesInicio}`;
+    } else {
+      return `Semana del ${diaInicio} de ${mesInicio} al ${diaFin} de ${mesFin}`;
+    }
   };
 
   const fetchHabitsAndProgress = async () => {
@@ -133,6 +168,15 @@ export function HabitsDashboard() {
     }
   };
 
+  const handleDeleteHabit = async (habitId: number) => {
+    try {
+      await habitsApi.deleteHabit(habitId);
+      fetchHabitsAndProgress();
+    } catch (error) {
+      console.error("Error eliminando hábito:", error);
+    }
+  };
+
   const handleToggleTracking = async (habitId: number, dayIndex: number) => {
     try {
       const currentWeek = getWeekNumber(new Date());
@@ -157,23 +201,25 @@ export function HabitsDashboard() {
         (t) => new Date(t.date).toISOString().split("T")[0] === formattedDate
       );
 
-      if (existingTracking) {
-        // Actualizar el registro existente
-        await trackingApi.updateTracking(existingTracking.id, {
-          isCompleted: !existingTracking.isCompleted,
-        });
-      } else {
-        // Crear un nuevo registro
+      if (existingTracking && existingTracking.isCompleted) {
+        // Si ya está marcado, eliminar el tracking (desmarcar)
+        await trackingApi.deleteTrackingByHabitAndDate(habitId, formattedDate);
+      } else if (!existingTracking) {
+        // Si no existe, crear uno nuevo como completado
         await trackingApi.createTracking({
           habitId,
           date: formattedDate,
-          isCompleted: true, // Asumimos que al hacer clic por primera vez se marca como completado
+          isCompleted: true,
+        });
+      } else {
+        // Si existe pero no está completado, marcarlo como completado
+        await trackingApi.updateTracking(existingTracking.id, {
+          isCompleted: true,
         });
       }
-      fetchHabitsAndProgress(); // Recargar hábitos y progreso después de actualizar el seguimiento
+      fetchHabitsAndProgress();
     } catch (error) {
       console.error("Error toggling tracking:", error);
-      // TODO: Manejar el estado de error en la UI
     }
   };
 
@@ -241,7 +287,7 @@ export function HabitsDashboard() {
                     Dashboard de Hábitos
                   </CardTitle>
                   <CardDescription className="text-green-100">
-                    Semana actual
+                    {getCurrentWeekRange()}
                   </CardDescription>
                 </CardHeader>
               </motion.div>
@@ -293,6 +339,15 @@ export function HabitsDashboard() {
                                   días completados
                                 </Badge>
                               </motion.div>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="text-red-500 hover:bg-red-100 ml-2"
+                                onClick={() => handleDeleteHabit(habit.id)}
+                                aria-label={`Eliminar hábito ${habit.name}`}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
                             </div>
                             <div className="flex space-x-1">
                               {days.map((dayLabel, dayIndex) => {

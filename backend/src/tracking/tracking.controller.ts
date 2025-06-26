@@ -44,6 +44,14 @@ export class TrackingController {
     return this.trackingService.remove(id);
   }
 
+  @Delete()
+  removeByHabitAndDate(
+    @Query('habitId', ParseIntPipe) habitId: number,
+    @Query('date') date: string,
+  ) {
+    return this.trackingService.removeByHabitAndDate(habitId, date);
+  }
+
   @Get('weekly-progress/:semana')
   getWeeklyProgress(@Param('semana') semana: string) {
     console.log(

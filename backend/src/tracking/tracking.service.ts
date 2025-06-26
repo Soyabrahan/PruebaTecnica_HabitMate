@@ -110,4 +110,21 @@ export class TrackingService {
 
     return habitsWithProgress;
   }
+
+  async removeByHabitAndDate(habitId: number, date: string): Promise<void> {
+    // Buscar todos los trackings de ese hábito en esa fecha (ignorando la hora)
+    const trackings = await this.trackingRepository.find({
+      where: { habitId },
+    });
+    const tracking = trackings.find((t) => {
+      const tDate = new Date(t.date).toISOString().split('T')[0];
+      return tDate === date;
+    });
+    if (!tracking) {
+      throw new NotFoundException(
+        `No existe un registro de seguimiento para el hábito ${habitId} en la fecha ${date}`,
+      );
+    }
+    await this.trackingRepository.delete(tracking.id);
+  }
 }

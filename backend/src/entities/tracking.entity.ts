@@ -12,7 +12,7 @@ export class Tracking {
   @Column({ default: false })
   isCompleted: boolean;
 
-  @ManyToOne(() => Habit, (habit) => habit.trackings)
+  @ManyToOne(() => Habit, (habit) => habit.trackings, { onDelete: 'CASCADE' })
   habit: Habit;
 
   @Column()

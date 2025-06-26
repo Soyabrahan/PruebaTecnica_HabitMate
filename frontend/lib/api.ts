@@ -72,6 +72,9 @@ export const trackingApi = {
   async updateTracking(id: number, updateTrackingDto: UpdateTrackingDto) {
     return api.patch<Tracking>(`/seguimiento/${id}`, updateTrackingDto);
   },
+  async deleteTrackingByHabitAndDate(habitId: number, date: string) {
+    return api.delete<void>(`/seguimiento?habitId=${habitId}&date=${date}`);
+  },
 };
 
 export default api;
