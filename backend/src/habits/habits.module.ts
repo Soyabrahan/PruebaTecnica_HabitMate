@@ -8,5 +8,6 @@ import { Habit } from '../entities/habit.entity';
   imports: [TypeOrmModule.forFeature([Habit])],
   providers: [HabitsService],
   controllers: [HabitsController],
+  exports: [TypeOrmModule],
 })
 export class HabitsModule {}
