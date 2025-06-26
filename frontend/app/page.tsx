@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, HTMLMotionProps } from "framer-motion";
 import {
   FadeIn,
   SlideInOnScroll,
@@ -99,16 +99,23 @@ export default function HabitMateLanding() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.25, 0, 1] }}
-        className="container mx-auto px-4 py-6 relative z-10"
+        {...({
+          className: "container mx-auto px-4 py-6 relative z-10",
+        } as HTMLMotionProps<"header">)}
       >
         <nav className="flex items-center justify-between">
           <motion.div
-            className="flex items-center space-x-2"
+            {...({
+              className: "flex items-center space-x-2",
+            } as HTMLMotionProps<"div">)}
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.2 }}
           >
             <motion.div
-              className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center"
+              {...({
+                className:
+                  "w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center",
+              } as HTMLMotionProps<"div">)}
               animate={{ rotate: [0, 360] }}
               transition={{
                 duration: 20,
@@ -169,7 +176,10 @@ export default function HabitMateLanding() {
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
                 Crea hábitos{" "}
                 <motion.span
-                  className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent"
+                  {...({
+                    className:
+                      "bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent",
+                  } as HTMLMotionProps<"span">)}
                   animate={{
                     backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
                   }}
@@ -214,7 +224,7 @@ export default function HabitMateLanding() {
                     variant="outline"
                     className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-3"
                   >
-                    Probar demo
+                    <Link href="/dashboard">Probar demo</Link>
                   </Button>
                 </motion.div>
               </div>
@@ -224,7 +234,7 @@ export default function HabitMateLanding() {
           <FadeIn delay={1} direction="right">
             <div className="relative">
               <motion.div
-                className="relative z-10"
+                {...({ className: "relative z-10" } as HTMLMotionProps<"div">)}
                 whileHover={{ scale: 1.02, rotateY: 5 }}
                 transition={{ duration: 0.3 }}
               >
@@ -237,7 +247,10 @@ export default function HabitMateLanding() {
                 />
               </motion.div>
               <motion.div
-                className="absolute -top-4 -right-4 w-72 h-72 bg-gradient-to-r from-green-200 to-blue-200 rounded-full blur-3xl opacity-30"
+                {...({
+                  className:
+                    "absolute -top-4 -right-4 w-72 h-72 bg-gradient-to-r from-green-200 to-blue-200 rounded-full blur-3xl opacity-30",
+                } as HTMLMotionProps<"div">)}
                 animate={{
                   scale: [1, 1.1, 1],
                   rotate: [0, 180, 360],
@@ -249,7 +262,10 @@ export default function HabitMateLanding() {
                 }}
               ></motion.div>
               <motion.div
-                className="absolute -bottom-4 -left-4 w-72 h-72 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30"
+                {...({
+                  className:
+                    "absolute -bottom-4 -left-4 w-72 h-72 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30",
+                } as HTMLMotionProps<"div">)}
                 animate={{
                   scale: [1.1, 1, 1.1],
                   rotate: [360, 180, 0],
@@ -289,7 +305,10 @@ export default function HabitMateLanding() {
                 <Card className="text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm h-full group">
                   <CardHeader>
                     <motion.div
-                      className="w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300"
+                      {...({
+                        className:
+                          "w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300",
+                      } as HTMLMotionProps<"div">)}
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.6 }}
                     >
@@ -336,7 +355,10 @@ export default function HabitMateLanding() {
             >
               <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm overflow-hidden">
                 <motion.div
-                  className="bg-gradient-to-r from-green-500 to-blue-500 text-white"
+                  {...({
+                    className:
+                      "bg-gradient-to-r from-green-500 to-blue-500 text-white",
+                  } as HTMLMotionProps<"div">)}
                   animate={{
                     backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
                   }}
@@ -360,7 +382,10 @@ export default function HabitMateLanding() {
                     {mockHabits.map((habit, index) => (
                       <StaggerItem key={index}>
                         <motion.div
-                          className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                          {...({
+                            className:
+                              "flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer",
+                          } as HTMLMotionProps<"div">)}
                           whileHover={{ x: 5, backgroundColor: "#f0fdf4" }}
                           transition={{ duration: 0.2 }}
                         >
@@ -392,7 +417,9 @@ export default function HabitMateLanding() {
                             {habit.completed.map((completed, dayIndex) => (
                               <motion.div
                                 key={dayIndex}
-                                className="text-center"
+                                {...({
+                                  className: "text-center",
+                                } as HTMLMotionProps<"div">)}
                                 whileHover={{ scale: 1.2, y: -2 }}
                                 transition={{ duration: 0.2 }}
                               >
@@ -400,11 +427,13 @@ export default function HabitMateLanding() {
                                   {days[dayIndex]}
                                 </div>
                                 <motion.div
-                                  className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                                    completed
-                                      ? "bg-green-500 text-white"
-                                      : "bg-gray-200 text-gray-400"
-                                  }`}
+                                  {...({
+                                    className: `w-8 h-8 rounded-full flex items-center justify-center ${
+                                      completed
+                                        ? "bg-green-500 text-white"
+                                        : "bg-gray-200 text-gray-400"
+                                    }`,
+                                  } as HTMLMotionProps<"div">)}
                                   whileHover={{
                                     scale: 1.1,
                                     boxShadow: completed
@@ -464,7 +493,10 @@ export default function HabitMateLanding() {
                     <Star className="w-12 h-12 mx-auto mb-6 text-yellow-300" />
                   </motion.div>
                   <motion.blockquote
-                    className="text-2xl md:text-3xl font-light italic mb-6 leading-relaxed"
+                    {...({
+                      className:
+                        "text-2xl md:text-3xl font-light italic mb-6 leading-relaxed",
+                    } as HTMLMotionProps<"blockquote">)}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
@@ -473,7 +505,9 @@ export default function HabitMateLanding() {
                     paso cuenta, cada día importa."
                   </motion.blockquote>
                   <motion.p
-                    className="text-green-100 text-lg"
+                    {...({
+                      className: "text-green-100 text-lg",
+                    } as HTMLMotionProps<"p">)}
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
@@ -491,7 +525,10 @@ export default function HabitMateLanding() {
       <section className="container mx-auto px-4 py-16 relative z-10">
         <SlideInOnScroll>
           <motion.div
-            className="text-center bg-white/80 backdrop-blur-sm rounded-2xl p-12 shadow-xl"
+            {...({
+              className:
+                "text-center bg-white/80 backdrop-blur-sm rounded-2xl p-12 shadow-xl",
+            } as HTMLMotionProps<"div">)}
             whileHover={{ scale: 1.02, y: -5 }}
             transition={{ duration: 0.3 }}
           >
@@ -522,12 +559,17 @@ export default function HabitMateLanding() {
         <footer className="container mx-auto px-4 py-12 border-t border-gray-200 bg-white/50 backdrop-blur-sm relative z-10">
           <div className="grid md:grid-cols-3 gap-8 items-center">
             <motion.div
-              className="flex items-center space-x-2"
+              {...({
+                className: "flex items-center space-x-2",
+              } as HTMLMotionProps<"div">)}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
             >
               <motion.div
-                className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center"
+                {...({
+                  className:
+                    "w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center",
+                } as HTMLMotionProps<"div">)}
                 animate={{ rotate: [0, 360] }}
                 transition={{
                   duration: 20,
@@ -582,7 +624,10 @@ export default function HabitMateLanding() {
           </div>
 
           <motion.div
-            className="mt-8 pt-8 border-t border-gray-200 text-center text-gray-500"
+            {...({
+              className:
+                "mt-8 pt-8 border-t border-gray-200 text-center text-gray-500",
+            } as HTMLMotionProps<"div">)}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
