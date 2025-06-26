@@ -100,7 +100,7 @@ export class TrackingService {
         const formattedDate = date.toISOString().split('T')[0];
         progress[formattedDate] = weeklyTrackings.some(
           (wt) =>
-            wt.date.toISOString().split('T')[0] === formattedDate &&
+            new Date(wt.date).toISOString().split('T')[0] === formattedDate &&
             wt.isCompleted,
         );
       }
