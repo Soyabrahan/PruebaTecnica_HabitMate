@@ -24,8 +24,7 @@ Este proyecto fue asistido y acelerado con IA (Geminis Flash 2.5) para:
 ### 1. Clona el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/tu-repo.git
-cd tu-repo
+git clone https://github.com/Soyabrahan/PruebaTecnica_HabitMate
 ```
 
 ### 2. Configura la base de datos
