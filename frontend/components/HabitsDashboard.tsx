@@ -55,10 +55,16 @@ export function HabitsDashboard() {
   const fetchHabitsAndProgress = async () => {
     try {
       const habitsResponse = await habitsApi.getAllHabits();
+      console.log("Frontend: Hábitos recibidos:", habitsResponse.data);
+
       const currentWeek = getWeekNumber(new Date());
       console.log("Frontend: Solicitando progreso semanal para:", currentWeek);
       const weeklyProgressResponse = await trackingApi.getWeeklyProgress(
         currentWeek
+      );
+      console.log(
+        "Frontend: Progreso semanal recibido:",
+        weeklyProgressResponse.data
       );
 
       const mergedHabits: FunctionalHabit[] = habitsResponse.data.map(
@@ -101,6 +107,7 @@ export function HabitsDashboard() {
           };
         }
       );
+      console.log("Frontend: Hábitos fusionados para el estado:", mergedHabits);
       setHabits(mergedHabits);
     } catch (error) {
       console.error("Error fetching habits or weekly progress:", error);
@@ -220,9 +227,9 @@ export function HabitsDashboard() {
                   className:
                     "bg-gradient-to-r from-green-500 to-blue-500 text-white",
                 } as HTMLMotionProps<"div">)}
-                animate={{
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                }}
+                // animate={{
+                //   backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                // }}
                 transition={{
                   duration: 5,
                   repeat: Number.POSITIVE_INFINITY,
@@ -245,100 +252,107 @@ export function HabitsDashboard() {
                       No tienes hábitos todavía. ¡Añade uno!
                     </p>
                   ) : (
-                    habits.map((habit) => (
-                      <StaggerItem key={habit.id}>
-                        <motion.div
-                          {...({
-                            className:
-                              "flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer",
-                          } as HTMLMotionProps<"div">)}
-                          whileHover={{ x: 5, backgroundColor: "#f0fdf4" }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <div className="flex items-center space-x-4">
-                            <div className="flex items-center space-x-2">
-                              <motion.div
-                                whileHover={{ scale: 1.2, rotate: 360 }}
-                                transition={{ duration: 0.3 }}
-                              >
-                                <CheckCircle className="w-5 h-5 text-green-500" />
-                              </motion.div>
-                              <span className="font-medium text-gray-900">
-                                {habit.name}
-                              </span>
-                            </div>
-                            <motion.div
-                              whileHover={{ scale: 1.1 }}
-                              transition={{ duration: 0.2 }}
-                            >
-                              <Badge
-                                variant="secondary"
-                                className="bg-green-100 text-green-700"
-                              >
-                                {habit.trackings?.filter((t) => t.isCompleted)
-                                  .length || 0}{" "}
-                                días completados
-                              </Badge>
-                            </motion.div>
-                          </div>
-                          <div className="flex space-x-1">
-                            {days.map((dayLabel, dayIndex) => {
-                              const isCompleted =
-                                habit.completed?.[dayIndex] || false;
-                              return (
+                    habits.map((habit) => {
+                      console.log(
+                        "Frontend: Renderizando hábito:",
+                        habit.name,
+                        habit.id
+                      );
+                      return (
+                        <StaggerItem key={habit.id}>
+                          <motion.div
+                            {...({
+                              className:
+                                "flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer",
+                            } as HTMLMotionProps<"div">)}
+                            whileHover={{ x: 5, backgroundColor: "#f0fdf4" }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            <div className="flex items-center space-x-4">
+                              <div className="flex items-center space-x-2">
                                 <motion.div
-                                  key={dayLabel}
-                                  {...({
-                                    className: "text-center",
-                                  } as HTMLMotionProps<"div">)}
-                                  whileHover={{ scale: 1.2, y: -2 }}
-                                  transition={{ duration: 0.2 }}
-                                  onClick={() =>
-                                    handleToggleTracking(habit.id, dayIndex)
-                                  }
+                                  whileHover={{ scale: 1.2, rotate: 360 }}
+                                  transition={{ duration: 0.3 }}
                                 >
-                                  <div className="text-xs text-gray-500 mb-1">
-                                    {dayLabel}
-                                  </div>
-                                  <motion.div
-                                    {...({
-                                      className: `w-8 h-8 rounded-full flex items-center justify-center ${
-                                        isCompleted
-                                          ? "bg-green-500 text-white"
-                                          : "bg-gray-200 text-gray-400"
-                                      }`,
-                                    } as HTMLMotionProps<"div">)}
-                                    whileHover={{
-                                      scale: 1.1,
-                                      boxShadow: isCompleted
-                                        ? "0 0 20px rgba(34, 197, 94, 0.5)"
-                                        : "0 0 10px rgba(0, 0, 0, 0.1)",
-                                    }}
-                                    animate={
-                                      isCompleted
-                                        ? {
-                                            boxShadow: [
-                                              "0 0 0px rgba(34, 197, 94, 0.5)",
-                                              "0 0 20px rgba(34, 197, 94, 0.3)",
-                                              "0 0 0px rgba(34, 197, 94, 0.5)",
-                                            ],
-                                          }
-                                        : {}
-                                    }
-                                    transition={{
-                                      duration: 2,
-                                      repeat: Number.POSITIVE_INFINITY,
-                                    }}
-                                  >
-                                    {isCompleted ? "✓" : "○"}
-                                  </motion.div>
+                                  <CheckCircle className="w-5 h-5 text-green-500" />
                                 </motion.div>
-                              );
-                            })}
-                          </div>
-                        </motion.div>
-                      </StaggerItem>
-                    ))
+                                <span className="font-medium text-gray-900">
+                                  {habit.name}
+                                </span>
+                              </div>
+                              <motion.div
+                                whileHover={{ scale: 1.1 }}
+                                transition={{ duration: 0.2 }}
+                              >
+                                <Badge
+                                  variant="secondary"
+                                  className="bg-green-100 text-green-700"
+                                >
+                                  {habit.trackings?.filter((t) => t.isCompleted)
+                                    .length || 0}{" "}
+                                  días completados
+                                </Badge>
+                              </motion.div>
+                            </div>
+                            <div className="flex space-x-1">
+                              {days.map((dayLabel, dayIndex) => {
+                                const isCompleted =
+                                  habit.completed?.[dayIndex] || false;
+                                return (
+                                  <motion.div
+                                    key={dayLabel}
+                                    {...({
+                                      className: "text-center",
+                                    } as HTMLMotionProps<"div">)}
+                                    whileHover={{ scale: 1.2, y: -2 }}
+                                    transition={{ duration: 0.2 }}
+                                    onClick={() =>
+                                      handleToggleTracking(habit.id, dayIndex)
+                                    }
+                                  >
+                                    <div className="text-xs text-gray-500 mb-1">
+                                      {dayLabel}
+                                    </div>
+                                    <motion.div
+                                      {...({
+                                        className: `w-8 h-8 rounded-full flex items-center justify-center ${
+                                          isCompleted
+                                            ? "bg-green-500 text-white"
+                                            : "bg-gray-200 text-gray-400"
+                                        }`,
+                                      } as HTMLMotionProps<"div">)}
+                                      whileHover={{
+                                        scale: 1.1,
+                                        boxShadow: isCompleted
+                                          ? "0 0 20px rgba(34, 197, 94, 0.5)"
+                                          : "0 0 10px rgba(0, 0, 0, 0.1)",
+                                      }}
+                                      animate={
+                                        isCompleted
+                                          ? {
+                                              boxShadow: [
+                                                "0 0 0px rgba(34, 197, 94, 0.5)",
+                                                "0 0 20px rgba(34, 197, 94, 0.3)",
+                                                "0 0 0px rgba(34, 197, 94, 0.5)",
+                                              ],
+                                            }
+                                          : {}
+                                      }
+                                      transition={{
+                                        duration: 2,
+                                        repeat: Number.POSITIVE_INFINITY,
+                                      }}
+                                    >
+                                      {isCompleted ? "✓" : "○"}
+                                    </motion.div>
+                                  </motion.div>
+                                );
+                              })}
+                            </div>
+                          </motion.div>
+                        </StaggerItem>
+                      );
+                    })
                   )}
                 </StaggerContainer>
               </CardContent>
