@@ -8,8 +8,4 @@ export class CreateHabitDto {
   @IsString()
   @IsOptional()
   description?: string;
-
-  @IsNumber()
-  @IsNotEmpty()
-  userId: number;
 }

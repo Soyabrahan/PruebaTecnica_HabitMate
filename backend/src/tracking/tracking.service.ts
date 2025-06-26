@@ -46,7 +46,7 @@ export class TrackingService {
     }
   }
 
-  async getWeeklyProgress(userId: number, week: string) {
+  async getWeeklyProgress(week: string) {
     // week format: YYYY-WW (e.g., 2023-40)
     const [yearStr, weekStr] = week.split('-');
     const year = parseInt(yearStr);
@@ -67,7 +67,6 @@ export class TrackingService {
     );
 
     const habits = await this.habitRepository.find({
-      where: { userId },
       relations: ['trackings'],
     });
 

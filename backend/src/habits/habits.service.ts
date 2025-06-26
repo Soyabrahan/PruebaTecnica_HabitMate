@@ -17,10 +17,8 @@ export class HabitsService {
     return this.habitsRepository.save(newHabit);
   }
 
-  async findAll(userId: number): Promise<Habit[]> {
-    return this.habitsRepository.find({
-      where: { userId },
-    });
+  async findAll(): Promise<Habit[]> {
+    return this.habitsRepository.find();
   }
 
   async findOne(id: number): Promise<Habit> {

@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { User } from './entities/user.entity';
 import { Habit } from './entities/habit.entity';
 import { Tracking } from './entities/tracking.entity';
 import { HabitsModule } from './habits/habits.module';
@@ -21,7 +20,7 @@ import { TrackingModule } from './tracking/tracking.module';
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || '1234',
       database: process.env.DB_DATABASE || 'PruebaTecnica',
-      entities: [User, Habit, Tracking],
+      entities: [Habit, Tracking],
       autoLoadEntities: true, // Carga automáticamente las entidades
       synchronize: true, // true solo para desarrollo, en producción usa migraciones
     }),

@@ -23,8 +23,8 @@ export class HabitsController {
   }
 
   @Get()
-  findAll(@Query('userId', ParseIntPipe) userId: number) {
-    return this.habitsService.findAll(userId);
+  findAll() {
+    return this.habitsService.findAll();
   }
 
   @Get(':id')

@@ -40,11 +40,8 @@ export class TrackingController {
     return this.trackingService.remove(id);
   }
 
-  @Get(':userId/weekly-progress')
-  getWeeklyProgress(
-    @Param('userId', ParseIntPipe) userId: number,
-    @Query('semana') semana: string,
-  ) {
-    return this.trackingService.getWeeklyProgress(userId, semana);
+  @Get('weekly-progress')
+  getWeeklyProgress(@Query('semana') semana: string) {
+    return this.trackingService.getWeeklyProgress(semana);
   }
 }

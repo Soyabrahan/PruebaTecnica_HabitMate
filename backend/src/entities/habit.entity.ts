@@ -1,11 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
-import { User } from './user.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Tracking } from './tracking.entity';
 
 @Entity()
@@ -21,12 +14,6 @@ export class Habit {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
-
-  @ManyToOne(() => User, (user) => user.habits)
-  user: User;
-
-  @Column()
-  userId: number;
 
   @OneToMany(() => Tracking, (tracking) => tracking.habit)
   trackings: Tracking[];
