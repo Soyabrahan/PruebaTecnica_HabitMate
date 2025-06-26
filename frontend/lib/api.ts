@@ -1,38 +1,77 @@
 import axios from "axios";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+console.log("API_URL used:", API_URL);
 
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
+interface Habit {
+  id: number;
+  name: string;
+  description?: string;
+  createdAt: string;
+  trackings: Tracking[];
+}
+
+interface CreateHabitDto {
+  name: string;
+  description?: string;
+}
+
+interface Tracking {
+  id: number;
+  date: string;
+  isCompleted: boolean;
+  habitId: number;
+}
+
+interface CreateTrackingDto {
+  date: string;
+  isCompleted: boolean;
+  habitId: number;
+}
+
+interface UpdateTrackingDto {
+  date?: string;
+  isCompleted?: boolean;
+  habitId?: number;
+}
+
 // Endpoints para hábitos
 export const habitsApi = {
-  createHabit: (habitData: { name: string; userId: number }) =>
-    api.post("/habitos", habitData),
-  getHabitsByUserId: (userId: number) => api.get(`/habitos?userId=${userId}`),
-  updateHabit: (id: number, habitData: { name?: string }) =>
-    api.patch(`/habitos/${id}`, habitData),
-  deleteHabit: (id: number) => api.delete(`/habitos/${id}`),
+  async createHabit(createHabitDto: CreateHabitDto) {
+    return api.post<Habit>("/habitos", createHabitDto);
+  },
+  async getAllHabits() {
+    return api.get<Habit[]>("/habitos");
+  },
+  async getHabitById(id: number) {
+    return api.get<Habit>(`/habitos/${id}`);
+  },
+  async updateHabit(id: number, updateHabitDto: CreateHabitDto) {
+    return api.patch<Habit>(`/habitos/${id}`, updateHabitDto);
+  },
+  async deleteHabit(id: number) {
+    return api.delete<void>(`/habitos/${id}`);
+  },
 };
 
 // Endpoints para seguimiento
 export const trackingApi = {
-  createTracking: (trackingData: {
-    habitId: number;
-    date: string;
-    completed: boolean;
-  }) => api.post("/seguimiento", trackingData),
-  getTrackingById: (id: number) => api.get(`/seguimiento/${id}`),
-  updateTracking: (id: number, trackingData: { completed?: boolean }) =>
-    api.patch(`/seguimiento/${id}`, trackingData),
-  deleteTracking: (id: number) => api.delete(`/seguimiento/${id}`),
-  getWeeklyProgress: (userId: number, semana: string) =>
-    api.get(`/seguimiento/${userId}/weekly-progress?semana=${semana}`),
+  async createTracking(createTrackingDto: CreateTrackingDto) {
+    return api.post<Tracking>("/seguimiento", createTrackingDto);
+  },
+  async getWeeklyProgress(week: string) {
+    return api.get<Habit[]>(`/seguimiento/weekly-progress/${week}`);
+  },
+  async updateTracking(id: number, updateTrackingDto: UpdateTrackingDto) {
+    return api.patch<Tracking>(`/seguimiento/${id}`, updateTrackingDto);
+  },
 };
 
 export default api;

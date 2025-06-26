@@ -8,10 +8,14 @@ import {
   Delete,
   Query,
   ParseIntPipe,
+  ValidationPipe,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { TrackingService } from './tracking.service';
 import { CreateTrackingDto } from './dto/create-tracking.dto';
 import { UpdateTrackingDto } from './dto/update-tracking.dto';
+import { GetWeeklyProgressDto } from './dto/get-weekly-progress.dto';
 
 @Controller('seguimiento')
 export class TrackingController {
@@ -40,8 +44,11 @@ export class TrackingController {
     return this.trackingService.remove(id);
   }
 
-  @Get('weekly-progress')
-  getWeeklyProgress(@Query('semana') semana: string) {
+  @Get('weekly-progress/:semana')
+  getWeeklyProgress(@Param('semana') semana: string) {
+    console.log(
+      `Backend Controller: Recibida solicitud para progreso semanal. Semana: ${semana} (Tipo: ${typeof semana})`,
+    );
     return this.trackingService.getWeeklyProgress(semana);
   }
 }

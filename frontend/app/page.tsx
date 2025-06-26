@@ -138,7 +138,7 @@ export default function HabitMateLanding() {
             </motion.div>
             <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
               <Link
-                href="#demo"
+                href="/dashboard"
                 className="text-gray-600 hover:text-green-600 transition-colors"
               >
                 Demo
@@ -414,52 +414,54 @@ export default function HabitMateLanding() {
                             </motion.div>
                           </div>
                           <div className="flex space-x-1">
-                            {habit.completed.map((completed, dayIndex) => (
-                              <motion.div
-                                key={dayIndex}
-                                {...({
-                                  className: "text-center",
-                                } as HTMLMotionProps<"div">)}
-                                whileHover={{ scale: 1.2, y: -2 }}
-                                transition={{ duration: 0.2 }}
-                              >
-                                <div className="text-xs text-gray-500 mb-1">
-                                  {days[dayIndex]}
-                                </div>
+                            {mockHabits[0].completed.map(
+                              (completed, dayIndex) => (
                                 <motion.div
+                                  key={dayIndex}
                                   {...({
-                                    className: `w-8 h-8 rounded-full flex items-center justify-center ${
-                                      completed
-                                        ? "bg-green-500 text-white"
-                                        : "bg-gray-200 text-gray-400"
-                                    }`,
+                                    className: "text-center",
                                   } as HTMLMotionProps<"div">)}
-                                  whileHover={{
-                                    scale: 1.1,
-                                    boxShadow: completed
-                                      ? "0 0 20px rgba(34, 197, 94, 0.5)"
-                                      : "0 0 10px rgba(0, 0, 0, 0.1)",
-                                  }}
-                                  animate={
-                                    completed
-                                      ? {
-                                          boxShadow: [
-                                            "0 0 0px rgba(34, 197, 94, 0.5)",
-                                            "0 0 20px rgba(34, 197, 94, 0.3)",
-                                            "0 0 0px rgba(34, 197, 94, 0.5)",
-                                          ],
-                                        }
-                                      : {}
-                                  }
-                                  transition={{
-                                    duration: 2,
-                                    repeat: Number.POSITIVE_INFINITY,
-                                  }}
+                                  whileHover={{ scale: 1.2, y: -2 }}
+                                  transition={{ duration: 0.2 }}
                                 >
-                                  {completed ? "✓" : "○"}
+                                  <div className="text-xs text-gray-500 mb-1">
+                                    {days[dayIndex]}
+                                  </div>
+                                  <motion.div
+                                    {...({
+                                      className: `w-8 h-8 rounded-full flex items-center justify-center ${
+                                        completed
+                                          ? "bg-green-500 text-white"
+                                          : "bg-gray-200 text-gray-400"
+                                      }`,
+                                    } as HTMLMotionProps<"div">)}
+                                    whileHover={{
+                                      scale: 1.1,
+                                      boxShadow: completed
+                                        ? "0 0 20px rgba(34, 197, 94, 0.5)"
+                                        : "0 0 10px rgba(0, 0, 0, 0.1)",
+                                    }}
+                                    animate={
+                                      completed
+                                        ? {
+                                            boxShadow: [
+                                              "0 0 0px rgba(34, 197, 94, 0.5)",
+                                              "0 0 20px rgba(34, 197, 94, 0.3)",
+                                              "0 0 0px rgba(34, 197, 94, 0.5)",
+                                            ],
+                                          }
+                                        : {}
+                                    }
+                                    transition={{
+                                      duration: 2,
+                                      repeat: Number.POSITIVE_INFINITY,
+                                    }}
+                                  >
+                                    {completed ? "✓" : "○"}
+                                  </motion.div>
                                 </motion.div>
-                              </motion.div>
-                            ))}
+                              )
+                            )}
                           </div>
                         </motion.div>
                       </StaggerItem>

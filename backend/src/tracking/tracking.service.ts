@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Tracking } from '../entities/tracking.entity';
@@ -52,18 +56,30 @@ export class TrackingService {
     const year = parseInt(yearStr);
     const weekNumber = parseInt(weekStr);
 
-    // Calculate start and end dates of the week
-    const simpleDate = new Date(year, 0, 1 + (weekNumber - 1) * 7);
-    const dayOfWeek = simpleDate.getDay();
-    const startDate = new Date(
-      simpleDate.getFullYear(),
-      simpleDate.getMonth(),
-      simpleDate.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1),
-    );
+    if (isNaN(year) || isNaN(weekNumber)) {
+      throw new BadRequestException('Invalid week format. Expected YYYY-WW.');
+    }
+
+    // Helper para obtener el Lunes de la semana
+    const getMonday = (d: Date): Date => {
+      d = new Date(d); // Crear una copia para evitar mutar el original
+      const day = d.getDay(); // 0 = Domingo, 1 = Lunes, ..., 6 = Sábado
+      const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Ajustar a Lunes
+      return new Date(d.setDate(diff));
+    };
+
+    // Calcular una fecha dentro de la semana objetivo
+    const dateInTargetWeek = new Date(year, 0, 1 + (weekNumber - 1) * 7);
+    const startDate = getMonday(dateInTargetWeek);
     const endDate = new Date(
       startDate.getFullYear(),
       startDate.getMonth(),
       startDate.getDate() + 6,
+    );
+
+    console.log(`Backend: Calculando progreso semanal para: ${week}`);
+    console.log(
+      `Backend: startDate: ${startDate.toISOString().split('T')[0]}, endDate: ${endDate.toISOString().split('T')[0]}`,
     );
 
     const habits = await this.habitRepository.find({
@@ -72,6 +88,7 @@ export class TrackingService {
 
     const habitsWithProgress = habits.map((habit) => {
       const weeklyTrackings = habit.trackings.filter((tracking) => {
+        // Convertir la fecha de seguimiento a un objeto Date si aún no lo es (TypeORM debería hacerlo)
         const trackingDate = new Date(tracking.date);
         return trackingDate >= startDate && trackingDate <= endDate;
       });
