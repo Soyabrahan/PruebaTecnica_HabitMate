@@ -243,25 +243,29 @@ export default function HabitMateLanding() {
                   whileTap={{ scale: 0.95 }}
                   className="w-full sm:w-auto"
                 >
-                  <Button
-                    size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white px-6 md:px-8 py-3 shadow-lg hover:shadow-xl transition-shadow"
-                  >
-                    <Link href="/dashboard">Empezar ahora</Link>
-                  </Button>
+                  <Link href="/dashboard" passHref>
+                    <Button
+                      size="lg"
+                      className="w-full sm:w-auto bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white px-6 md:px-8 py-3 shadow-lg hover:shadow-xl transition-shadow"
+                    >
+                      Empezar ahora
+                    </Button>
+                  </Link>
                 </motion.div>
                 <motion.div
                   whileHover={!isMobile ? { scale: 1.05, y: -2 } : {}}
                   whileTap={{ scale: 0.95 }}
                   className="w-full sm:w-auto"
                 >
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="w-full sm:w-auto border-gray-300 text-gray-700 hover:bg-gray-50 px-6 md:px-8 py-3"
-                  >
-                    <Link href="/dashboard">Probar demo</Link>
-                  </Button>
+                  <Link href="/dashboard" passHref>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="w-full sm:w-auto border-gray-300 text-gray-700 hover:bg-gray-50 px-6 md:px-8 py-3"
+                    >
+                      Probar demo
+                    </Button>
+                  </Link>
                 </motion.div>
               </div>
             </FadeIn>
@@ -571,12 +575,14 @@ export default function HabitMateLanding() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white px-12 py-4 text-lg shadow-lg hover:shadow-xl transition-shadow"
-              >
-                <Link href="/dashboard">Comenzar gratis</Link>
-              </Button>
+              <Link href="/dashboard" passHref>
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white px-12 py-4 text-lg shadow-lg hover:shadow-xl transition-shadow"
+                >
+                  Comenzar gratis
+                </Button>
+              </Link>
             </motion.div>
           </motion.div>
         </SlideInOnScroll>
