@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Card,
   CardContent,
@@ -87,7 +87,7 @@ export function HabitsDashboard() {
     }
   };
 
-  const fetchHabitsAndProgress = async () => {
+  const fetchHabitsAndProgress = useCallback(async () => {
     try {
       const habitsResponse = await habitsApi.getAllHabits();
       console.log("Frontend: Hábitos recibidos:", habitsResponse.data);
@@ -148,7 +148,7 @@ export function HabitsDashboard() {
       console.error("Error fetching habits or weekly progress:", error);
       // TODO: Manejar el estado de error en la UI
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchHabitsAndProgress();
