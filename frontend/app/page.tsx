@@ -503,8 +503,8 @@ export default function HabitMateLanding() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                   >
-                    "El secreto del éxito está en la constancia. Cada pequeño
-                    paso cuenta, cada día importa."
+                    &ldquo;El secreto del éxito está en la constancia. Cada
+                    pequeño paso cuenta, cada día importa.&rdquo;
                   </motion.blockquote>
                   <motion.p
                     {...({

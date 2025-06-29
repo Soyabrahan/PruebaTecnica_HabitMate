@@ -128,7 +128,7 @@ export function HabitsDashboard() {
             const formattedDate = date.toISOString().split("T")[0];
             const isCompleted =
               progressForHabit?.trackings.some(
-                (t: any) =>
+                (t: Tracking) =>
                   new Date(t.date).toISOString().split("T")[0] ===
                     formattedDate && t.isCompleted
               ) || false;
@@ -152,7 +152,7 @@ export function HabitsDashboard() {
 
   useEffect(() => {
     fetchHabitsAndProgress();
-  }, []);
+  }, [fetchHabitsAndProgress]);
 
   const handleCreateHabit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
