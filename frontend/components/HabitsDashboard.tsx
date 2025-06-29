@@ -224,13 +224,13 @@ export function HabitsDashboard() {
   };
 
   return (
-    <section className="container mx-auto px-4 py-16 md:py-24 relative z-10">
+    <section className="container mx-auto px-4 py-8 md:py-16 lg:py-24 relative z-10">
       <SlideInOnScroll>
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-8 md:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Tu progreso, siempre visible
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4 sm:px-0">
             Visualiza tus hábitos de forma clara y mantente motivado con cada
             logro
           </p>
@@ -240,12 +240,17 @@ export function HabitsDashboard() {
       <SlideInOnScroll delay={0.3}>
         <div className="max-w-4xl mx-auto">
           {/* Formulario para añadir nuevo hábito */}
-          <Card className="mb-8 shadow-2xl border-0 bg-white/90 backdrop-blur-sm overflow-hidden">
-            <CardHeader>
-              <CardTitle className="text-2xl">Añadir Nuevo Hábito</CardTitle>
+          <Card className="mb-6 md:mb-8 shadow-2xl border-0 bg-white/90 backdrop-blur-sm overflow-hidden">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-xl md:text-2xl">
+                Añadir Nuevo Hábito
+              </CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
-              <form onSubmit={handleCreateHabit} className="flex space-x-4">
+            <CardContent className="p-4 md:p-6">
+              <form
+                onSubmit={handleCreateHabit}
+                className="flex flex-col sm:flex-row gap-3 md:gap-4"
+              >
                 <Input
                   type="text"
                   placeholder="Nombre del Hábito"
@@ -255,7 +260,7 @@ export function HabitsDashboard() {
                 />
                 <Button
                   type="submit"
-                  className="bg-green-500 hover:bg-green-600 text-white"
+                  className="bg-green-500 hover:bg-green-600 text-white w-full sm:w-auto"
                 >
                   Añadir Hábito
                 </Button>
@@ -273,28 +278,25 @@ export function HabitsDashboard() {
                   className:
                     "bg-gradient-to-r from-green-500 to-blue-500 text-white",
                 } as HTMLMotionProps<"div">)}
-                // animate={{
-                //   backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                // }}
                 transition={{
                   duration: 5,
                   repeat: Number.POSITIVE_INFINITY,
                   ease: "linear",
                 }}
               >
-                <CardHeader>
-                  <CardTitle className="text-2xl">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-xl md:text-2xl">
                     Dashboard de Hábitos
                   </CardTitle>
-                  <CardDescription className="text-green-100">
+                  <CardDescription className="text-green-100 text-sm md:text-base">
                     {getCurrentWeekRange()}
                   </CardDescription>
                 </CardHeader>
               </motion.div>
-              <CardContent className="p-6">
-                <StaggerContainer className="space-y-4">
+              <CardContent className="p-4 md:p-6">
+                <StaggerContainer className="space-y-3 md:space-y-4">
                   {habits.length === 0 ? (
-                    <p className="text-gray-500 text-center">
+                    <p className="text-gray-500 text-center py-8">
                       No tienes hábitos todavía. ¡Añade uno!
                     </p>
                   ) : (
@@ -309,100 +311,108 @@ export function HabitsDashboard() {
                           <motion.div
                             {...({
                               className:
-                                "flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer",
+                                "flex flex-col lg:flex-row lg:items-center justify-between p-3 md:p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer",
                             } as HTMLMotionProps<"div">)}
                             whileHover={{ x: 5, backgroundColor: "#f0fdf4" }}
                             transition={{ duration: 0.2 }}
                           >
-                            <div className="flex items-center space-x-4">
-                              <div className="flex items-center space-x-2">
+                            {/* Habit info section */}
+                            <div className="flex items-center justify-between lg:justify-start space-x-3 md:space-x-4 mb-3 lg:mb-0">
+                              <div className="flex items-center space-x-2 md:space-x-3">
                                 <motion.div
                                   whileHover={{ scale: 1.2, rotate: 360 }}
                                   transition={{ duration: 0.3 }}
                                 >
-                                  <CheckCircle className="w-5 h-5 text-green-500" />
+                                  <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-green-500" />
                                 </motion.div>
-                                <span className="font-medium text-gray-900">
-                                  {habit.name}
-                                </span>
+                                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3">
+                                  <span className="font-medium text-gray-900 text-sm md:text-base">
+                                    {habit.name}
+                                  </span>
+                                  <motion.div
+                                    whileHover={{ scale: 1.1 }}
+                                    transition={{ duration: 0.2 }}
+                                  >
+                                    <Badge
+                                      variant="secondary"
+                                      className="bg-green-100 text-green-700 text-xs md:text-sm mt-1 sm:mt-0"
+                                    >
+                                      {habit.trackings?.filter(
+                                        (t) => t.isCompleted
+                                      ).length || 0}{" "}
+                                      días completados
+                                    </Badge>
+                                  </motion.div>
+                                </div>
                               </div>
-                              <motion.div
-                                whileHover={{ scale: 1.1 }}
-                                transition={{ duration: 0.2 }}
-                              >
-                                <Badge
-                                  variant="secondary"
-                                  className="bg-green-100 text-green-700"
-                                >
-                                  {habit.trackings?.filter((t) => t.isCompleted)
-                                    .length || 0}{" "}
-                                  días completados
-                                </Badge>
-                              </motion.div>
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="text-red-500 hover:bg-red-100 ml-2"
+                                className="text-red-500 hover:bg-red-100 lg:ml-2"
                                 onClick={() => handleDeleteHabit(habit.id)}
                                 aria-label={`Eliminar hábito ${habit.name}`}
                               >
                                 <Trash2 className="w-4 h-4" />
                               </Button>
                             </div>
-                            <div className="flex space-x-1">
-                              {days.map((dayLabel, dayIndex) => {
-                                const isCompleted =
-                                  habit.completed?.[dayIndex] || false;
-                                return (
-                                  <motion.div
-                                    key={dayLabel}
-                                    {...({
-                                      className: "text-center",
-                                    } as HTMLMotionProps<"div">)}
-                                    whileHover={{ scale: 1.2, y: -2 }}
-                                    transition={{ duration: 0.2 }}
-                                    onClick={() =>
-                                      handleToggleTracking(habit.id, dayIndex)
-                                    }
-                                  >
-                                    <div className="text-xs text-gray-500 mb-1">
-                                      {dayLabel}
-                                    </div>
+
+                            {/* Week grid - responsive */}
+                            <div className="flex justify-center lg:justify-end">
+                              <div className="grid grid-cols-7 gap-1 md:gap-2">
+                                {days.map((dayLabel, dayIndex) => {
+                                  const isCompleted =
+                                    habit.completed?.[dayIndex] || false;
+                                  return (
                                     <motion.div
+                                      key={dayLabel}
                                       {...({
-                                        className: `w-8 h-8 rounded-full flex items-center justify-center ${
-                                          isCompleted
-                                            ? "bg-green-500 text-white"
-                                            : "bg-gray-200 text-gray-400"
-                                        }`,
+                                        className: "text-center",
                                       } as HTMLMotionProps<"div">)}
-                                      whileHover={{
-                                        scale: 1.1,
-                                        boxShadow: isCompleted
-                                          ? "0 0 20px rgba(34, 197, 94, 0.5)"
-                                          : "0 0 10px rgba(0, 0, 0, 0.1)",
-                                      }}
-                                      animate={
-                                        isCompleted
-                                          ? {
-                                              boxShadow: [
-                                                "0 0 0px rgba(34, 197, 94, 0.5)",
-                                                "0 0 20px rgba(34, 197, 94, 0.3)",
-                                                "0 0 0px rgba(34, 197, 94, 0.5)",
-                                              ],
-                                            }
-                                          : {}
+                                      whileHover={{ scale: 1.2, y: -2 }}
+                                      transition={{ duration: 0.2 }}
+                                      onClick={() =>
+                                        handleToggleTracking(habit.id, dayIndex)
                                       }
-                                      transition={{
-                                        duration: 2,
-                                        repeat: Number.POSITIVE_INFINITY,
-                                      }}
                                     >
-                                      {isCompleted ? "✓" : "○"}
+                                      <div className="text-xs text-gray-500 mb-1">
+                                        {dayLabel}
+                                      </div>
+                                      <motion.div
+                                        {...({
+                                          className: `w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-xs md:text-sm font-bold ${
+                                            isCompleted
+                                              ? "bg-green-500 text-white"
+                                              : "bg-gray-200 text-gray-400"
+                                          }`,
+                                        } as HTMLMotionProps<"div">)}
+                                        whileHover={{
+                                          scale: 1.1,
+                                          boxShadow: isCompleted
+                                            ? "0 0 20px rgba(34, 197, 94, 0.5)"
+                                            : "0 0 10px rgba(0, 0, 0, 0.1)",
+                                        }}
+                                        animate={
+                                          isCompleted
+                                            ? {
+                                                boxShadow: [
+                                                  "0 0 0px rgba(34, 197, 94, 0.5)",
+                                                  "0 0 20px rgba(34, 197, 94, 0.3)",
+                                                  "0 0 0px rgba(34, 197, 94, 0.5)",
+                                                ],
+                                              }
+                                            : {}
+                                        }
+                                        transition={{
+                                          duration: 2,
+                                          repeat: Number.POSITIVE_INFINITY,
+                                        }}
+                                      >
+                                        {isCompleted ? "✓" : "○"}
+                                      </motion.div>
                                     </motion.div>
-                                  </motion.div>
-                                );
-                              })}
+                                  );
+                                })}
+                              </div>
                             </div>
                           </motion.div>
                         </StaggerItem>

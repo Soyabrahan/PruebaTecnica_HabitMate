@@ -100,7 +100,7 @@ export default function HabitMateLanding() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.25, 0, 1] }}
         {...({
-          className: "container mx-auto px-4 py-6 relative z-10",
+          className: "container mx-auto px-4 py-4 md:py-6 relative z-10",
         } as HTMLMotionProps<"header">)}
       >
         <nav className="flex items-center justify-between">
@@ -114,7 +114,7 @@ export default function HabitMateLanding() {
             <motion.div
               {...({
                 className:
-                  "w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center",
+                  "w-6 h-6 md:w-8 md:h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center",
               } as HTMLMotionProps<"div">)}
               animate={{ rotate: [0, 360] }}
               transition={{
@@ -123,10 +123,26 @@ export default function HabitMateLanding() {
                 ease: "linear",
               }}
             >
-              <Calendar className="w-5 h-5 text-white" />
+              <Calendar className="w-3 h-3 md:w-5 md:h-5 text-white" />
             </motion.div>
-            <span className="text-xl font-bold text-gray-800">HabitMate</span>
+            <span className="text-lg md:text-xl font-bold text-gray-800">
+              HabitMate
+            </span>
           </motion.div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-green-500 text-green-600 hover:bg-green-50"
+              >
+                <Link href="/dashboard">Demo</Link>
+              </Button>
+            </motion.div>
+          </div>
+
           <div className="hidden md:flex items-center space-x-6">
             <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
               <Link
@@ -157,15 +173,15 @@ export default function HabitMateLanding() {
       </motion.header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-16 md:py-24 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="text-center lg:text-left">
+      <section className="container mx-auto px-4 py-8 md:py-16 lg:py-24 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="text-center lg:text-left order-2 lg:order-1">
             <FadeIn delay={0.2}>
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
-                <Badge className="mb-4 bg-green-100 text-green-700 hover:bg-green-100">
+                <Badge className="mb-4 bg-green-100 text-green-700 hover:bg-green-100 text-xs md:text-sm">
                   <Sparkles className="w-3 h-3 mr-1" />
                   Nuevo: Sugerencias con IA
                 </Badge>
@@ -173,7 +189,7 @@ export default function HabitMateLanding() {
             </FadeIn>
 
             <FadeIn delay={0.4}>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight">
                 Crea hábitos{" "}
                 <motion.span
                   {...({
@@ -195,7 +211,7 @@ export default function HabitMateLanding() {
             </FadeIn>
 
             <FadeIn delay={0.6}>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 md:mb-8 leading-relaxed px-4 sm:px-0">
                 Sigue tu progreso, mantente enfocado y mejora cada día con
                 HabitMate. La aplicación que convierte tus objetivos en rutinas
                 exitosas.
@@ -203,14 +219,15 @@ export default function HabitMateLanding() {
             </FadeIn>
 
             <FadeIn delay={0.8}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start px-4 sm:px-0">
                 <motion.div
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
+                  className="w-full sm:w-auto"
                 >
                   <Button
                     size="lg"
-                    className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white px-8 py-3 shadow-lg hover:shadow-xl transition-shadow"
+                    className="w-full sm:w-auto bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white px-6 md:px-8 py-3 shadow-lg hover:shadow-xl transition-shadow"
                   >
                     Empezar ahora
                   </Button>
@@ -218,11 +235,12 @@ export default function HabitMateLanding() {
                 <motion.div
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
+                  className="w-full sm:w-auto"
                 >
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-3"
+                    className="w-full sm:w-auto border-gray-300 text-gray-700 hover:bg-gray-50 px-6 md:px-8 py-3"
                   >
                     <Link href="/dashboard">Probar demo</Link>
                   </Button>
@@ -231,8 +249,8 @@ export default function HabitMateLanding() {
             </FadeIn>
           </div>
 
-          <FadeIn delay={1} direction="right">
-            <div className="relative">
+          <FadeIn delay={1} direction="right" className="order-1 lg:order-2">
+            <div className="relative px-4 sm:px-0">
               <motion.div
                 {...({ className: "relative z-10" } as HTMLMotionProps<"div">)}
                 whileHover={{ scale: 1.02, rotateY: 5 }}
@@ -243,13 +261,13 @@ export default function HabitMateLanding() {
                   alt="HabitMate App Preview"
                   width={600}
                   height={500}
-                  className="rounded-2xl shadow-2xl"
+                  className="rounded-2xl shadow-2xl w-full h-auto max-w-md mx-auto lg:max-w-none"
                 />
               </motion.div>
               <motion.div
                 {...({
                   className:
-                    "absolute -top-4 -right-4 w-72 h-72 bg-gradient-to-r from-green-200 to-blue-200 rounded-full blur-3xl opacity-30",
+                    "absolute -top-4 -right-4 w-48 h-48 md:w-72 md:h-72 bg-gradient-to-r from-green-200 to-blue-200 rounded-full blur-3xl opacity-30",
                 } as HTMLMotionProps<"div">)}
                 animate={{
                   scale: [1, 1.1, 1],
@@ -264,7 +282,7 @@ export default function HabitMateLanding() {
               <motion.div
                 {...({
                   className:
-                    "absolute -bottom-4 -left-4 w-72 h-72 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30",
+                    "absolute -bottom-4 -left-4 w-48 h-48 md:w-72 md:h-72 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30",
                 } as HTMLMotionProps<"div">)}
                 animate={{
                   scale: [1.1, 1, 1.1],
@@ -284,42 +302,42 @@ export default function HabitMateLanding() {
       {/* Benefits Section */}
       <section
         id="beneficios"
-        className="container mx-auto px-4 py-16 md:py-24 relative z-10"
+        className="container mx-auto px-4 py-12 md:py-16 lg:py-24 relative z-10"
       >
         <SlideInOnScroll>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               ¿Por qué elegir HabitMate?
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4 sm:px-0">
               Diseñado para hacer que el desarrollo de hábitos sea simple,
               visual y efectivo
             </p>
           </div>
         </SlideInOnScroll>
 
-        <StaggerContainer className="grid md:grid-cols-3 gap-8">
+        <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {benefits.map((benefit, index) => (
             <StaggerItem key={index}>
               <ScaleOnHover>
                 <Card className="text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm h-full group">
-                  <CardHeader>
+                  <CardHeader className="pb-4">
                     <motion.div
                       {...({
                         className:
-                          "w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300",
+                          "w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300",
                       } as HTMLMotionProps<"div">)}
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.6 }}
                     >
-                      <benefit.icon className="w-8 h-8 text-white" />
+                      <benefit.icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
                     </motion.div>
-                    <CardTitle className="text-xl text-gray-900 group-hover:text-green-600 transition-colors">
+                    <CardTitle className="text-lg md:text-xl text-gray-900 group-hover:text-green-600 transition-colors">
                       {benefit.title}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-gray-600 text-base leading-relaxed">
+                    <CardDescription className="text-gray-600 text-sm md:text-base leading-relaxed">
                       {benefit.description}
                     </CardDescription>
                   </CardContent>
@@ -333,14 +351,14 @@ export default function HabitMateLanding() {
       {/* App Preview Section */}
       <section
         id="demo"
-        className="container mx-auto px-4 py-16 md:py-24 relative z-10"
+        className="container mx-auto px-4 py-12 md:py-16 lg:py-24 relative z-10"
       >
         <SlideInOnScroll>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Tu progreso, siempre visible
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4 sm:px-0">
               Visualiza tus hábitos de forma clara y mantente motivado con cada
               logro
             </p>
@@ -348,7 +366,7 @@ export default function HabitMateLanding() {
         </SlideInOnScroll>
 
         <SlideInOnScroll delay={0.3}>
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto px-4 sm:px-0">
             <motion.div
               whileHover={{ scale: 1.02, y: -5 }}
               transition={{ duration: 0.3 }}
@@ -368,81 +386,63 @@ export default function HabitMateLanding() {
                     ease: "linear",
                   }}
                 >
-                  <CardHeader>
-                    <CardTitle className="text-2xl">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="text-xl md:text-2xl">
                       Dashboard de Hábitos
                     </CardTitle>
-                    <CardDescription className="text-green-100">
+                    <CardDescription className="text-green-100 text-sm md:text-base">
                       Semana del 18 - 24 de Marzo
                     </CardDescription>
                   </CardHeader>
                 </motion.div>
-                <CardContent className="p-6">
-                  <StaggerContainer className="space-y-4">
+                <CardContent className="p-4 md:p-6">
+                  <StaggerContainer className="space-y-3 md:space-y-4">
                     {mockHabits.map((habit, index) => (
                       <StaggerItem key={index}>
                         <motion.div
                           {...({
                             className:
-                              "flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer",
+                              "flex flex-col sm:flex-row sm:items-center justify-between p-3 md:p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer",
                           } as HTMLMotionProps<"div">)}
                           whileHover={{ x: 5, backgroundColor: "#f0fdf4" }}
                           transition={{ duration: 0.2 }}
                         >
-                          <div className="flex items-center space-x-4">
+                          <div className="flex items-center space-x-3 md:space-x-4 mb-3 sm:mb-0">
                             <div className="flex items-center space-x-2">
                               <motion.div
                                 whileHover={{ scale: 1.2, rotate: 360 }}
                                 transition={{ duration: 0.3 }}
                               >
-                                <CheckCircle className="w-5 h-5 text-green-500" />
+                                <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-green-500" />
                               </motion.div>
-                              <span className="font-medium text-gray-900">
+                              <span className="font-medium text-gray-900 text-sm md:text-base">
                                 {habit.name}
                               </span>
                             </div>
-                            <motion.div
-                              whileHover={{ scale: 1.1 }}
-                              transition={{ duration: 0.2 }}
-                            >
-                              <Badge
-                                variant="secondary"
-                                className="bg-green-100 text-green-700"
-                              >
-                                {habit.streak} días seguidos
-                              </Badge>
-                            </motion.div>
                           </div>
-                          <div className="flex space-x-1">
-                            {mockHabits[0].completed.map(
-                              (completed, dayIndex) => (
-                                <motion.div
+
+                          {/* Days grid - responsive */}
+                          <div className="flex items-center space-x-1 md:space-x-2">
+                            <div className="flex space-x-1 md:space-x-2">
+                              {days.map((day, dayIndex) => (
+                                <div
                                   key={dayIndex}
-                                  {...({
-                                    className: "text-center",
-                                  } as HTMLMotionProps<"div">)}
-                                  whileHover={{ scale: 1.2, y: -2 }}
-                                  transition={{ duration: 0.2 }}
+                                  className="flex flex-col items-center space-y-1"
                                 >
-                                  <div className="text-xs text-gray-500 mb-1">
-                                    {days[dayIndex]}
-                                  </div>
+                                  <span className="text-xs md:text-sm text-gray-500 font-medium">
+                                    {day}
+                                  </span>
                                   <motion.div
                                     {...({
-                                      className: `w-8 h-8 rounded-full flex items-center justify-center ${
-                                        completed
+                                      className: `w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-xs md:text-sm font-bold transition-all duration-300 ${
+                                        habit.completed[dayIndex]
                                           ? "bg-green-500 text-white"
-                                          : "bg-gray-200 text-gray-400"
+                                          : "bg-gray-200 text-gray-500"
                                       }`,
                                     } as HTMLMotionProps<"div">)}
-                                    whileHover={{
-                                      scale: 1.1,
-                                      boxShadow: completed
-                                        ? "0 0 20px rgba(34, 197, 94, 0.5)"
-                                        : "0 0 10px rgba(0, 0, 0, 0.1)",
-                                    }}
+                                    whileHover={{ scale: 1.1 }}
                                     animate={
-                                      completed
+                                      habit.completed[dayIndex]
                                         ? {
                                             boxShadow: [
                                               "0 0 0px rgba(34, 197, 94, 0.5)",
@@ -457,11 +457,11 @@ export default function HabitMateLanding() {
                                       repeat: Number.POSITIVE_INFINITY,
                                     }}
                                   >
-                                    {completed ? "✓" : "○"}
+                                    {habit.completed[dayIndex] ? "✓" : "○"}
                                   </motion.div>
-                                </motion.div>
-                              )
-                            )}
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </motion.div>
                       </StaggerItem>
