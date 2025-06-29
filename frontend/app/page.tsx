@@ -611,18 +611,6 @@ export default function HabitMateLanding() {
               <span className="text-xl font-bold text-gray-800">HabitMate</span>
             </motion.div>
 
-            <div className="text-center">
-              <p className="text-gray-600 flex items-center justify-center">
-                Hecho con{" "}
-                <motion.span
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY }}
-                >
-                  <Heart className="w-4 h-4 mx-1 text-red-500" />
-                </motion.span>
-              </p>
-            </div>
-
             <div className="flex justify-end space-x-6">
               <motion.div
                 whileHover={{ scale: 1.1, y: -2 }}
@@ -642,13 +630,17 @@ export default function HabitMateLanding() {
                 whileHover={{ scale: 1.1, y: -2 }}
                 transition={{ duration: 0.2 }}
               >
-                <Link
-                  href="mailto:abrahanramirez2410@gmail.com"
-                  className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors"
+                <button
+                  onClick={() => {
+                    const mailtoLink =
+                      "mailto:abrahanramirez2410@gmail.com?subject=Contacto desde HabitMate&body=Hola Abrahan, me gustaría contactarte sobre HabitMate.";
+                    window.open(mailtoLink, "_blank");
+                  }}
+                  className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors bg-transparent border-none cursor-pointer"
                 >
                   <Mail className="w-5 h-5" />
                   <span>Contacto</span>
-                </Link>
+                </button>
               </motion.div>
             </div>
           </div>
