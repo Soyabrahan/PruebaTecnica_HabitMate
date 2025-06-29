@@ -620,17 +620,18 @@ export default function HabitMateLanding() {
                 >
                   <Heart className="w-4 h-4 mx-1 text-red-500" />
                 </motion.span>
-                para ayudarte a crecer
               </p>
             </div>
 
-            <div className="flex justify-center md:justify-end space-x-4">
+            <div className="flex justify-end space-x-6">
               <motion.div
                 whileHover={{ scale: 1.1, y: -2 }}
                 transition={{ duration: 0.2 }}
               >
                 <Link
-                  href="#"
+                  href="https://github.com/Soyabrahan"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors"
                 >
                   <Github className="w-5 h-5" />
@@ -642,7 +643,7 @@ export default function HabitMateLanding() {
                 transition={{ duration: 0.2 }}
               >
                 <Link
-                  href="#"
+                  href="mailto:abrahanramirez2410@gmail.com"
                   className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors"
                 >
                   <Mail className="w-5 h-5" />
