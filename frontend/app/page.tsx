@@ -31,8 +31,18 @@ import {
   FloatingElement,
   ScaleOnHover,
 } from "@/components/animations";
+import { useIsMobile } from "@/hooks/useInView";
 
 export default function HabitMateLanding() {
+  const isMobile = useIsMobile();
+
+  // Configuración de animaciones optimizada para móvil
+  const animationConfig = {
+    duration: isMobile ? 0.3 : 0.8,
+    delay: isMobile ? 0.1 : 0.2,
+    stagger: isMobile ? 0.05 : 0.1,
+  };
+
   const benefits = [
     {
       icon: CheckCircle,
@@ -81,24 +91,29 @@ export default function HabitMateLanding() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <FloatingElement className="absolute top-20 left-10">
-          <div className="w-32 h-32 bg-gradient-to-r from-green-200/30 to-blue-200/30 rounded-full blur-xl"></div>
-        </FloatingElement>
-        <FloatingElement className="absolute top-40 right-20">
-          <div className="w-24 h-24 bg-gradient-to-r from-purple-200/30 to-pink-200/30 rounded-full blur-xl"></div>
-        </FloatingElement>
-        <FloatingElement className="absolute bottom-40 left-1/4">
-          <div className="w-40 h-40 bg-gradient-to-r from-blue-200/20 to-green-200/20 rounded-full blur-2xl"></div>
-        </FloatingElement>
-      </div>
+      {/* Animated Background Elements - Reducidos en móvil */}
+      {!isMobile && (
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <FloatingElement className="absolute top-20 left-10">
+            <div className="w-32 h-32 bg-gradient-to-r from-green-200/30 to-blue-200/30 rounded-full blur-xl"></div>
+          </FloatingElement>
+          <FloatingElement className="absolute top-40 right-20">
+            <div className="w-24 h-24 bg-gradient-to-r from-purple-200/30 to-pink-200/30 rounded-full blur-xl"></div>
+          </FloatingElement>
+          <FloatingElement className="absolute bottom-40 left-1/4">
+            <div className="w-40 h-40 bg-gradient-to-r from-blue-200/20 to-green-200/20 rounded-full blur-2xl"></div>
+          </FloatingElement>
+        </div>
+      )}
 
       {/* Header */}
       <motion.header
-        initial={{ y: -100, opacity: 0 }}
+        initial={{ y: isMobile ? 0 : -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.25, 0.25, 0, 1] }}
+        transition={{
+          duration: animationConfig.duration,
+          ease: [0.25, 0.25, 0, 1],
+        }}
         {...({
           className: "container mx-auto px-4 py-4 md:py-6 relative z-10",
         } as HTMLMotionProps<"header">)}
@@ -108,7 +123,7 @@ export default function HabitMateLanding() {
             {...({
               className: "flex items-center space-x-2",
             } as HTMLMotionProps<"div">)}
-            whileHover={{ scale: 1.05 }}
+            whileHover={!isMobile ? { scale: 1.05 } : {}}
             transition={{ duration: 0.2 }}
           >
             <motion.div
@@ -116,7 +131,7 @@ export default function HabitMateLanding() {
                 className:
                   "w-6 h-6 md:w-8 md:h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center",
               } as HTMLMotionProps<"div">)}
-              animate={{ rotate: [0, 360] }}
+              animate={!isMobile ? { rotate: [0, 360] } : {}}
               transition={{
                 duration: 20,
                 repeat: Number.POSITIVE_INFINITY,
@@ -176,9 +191,9 @@ export default function HabitMateLanding() {
       <section className="container mx-auto px-4 py-8 md:py-16 lg:py-24 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="text-center lg:text-left order-2 lg:order-1">
-            <FadeIn delay={0.2}>
+            <FadeIn delay={isMobile ? 0.1 : 0.2}>
               <motion.div
-                whileHover={{ scale: 1.05 }}
+                whileHover={!isMobile ? { scale: 1.05 } : {}}
                 transition={{ duration: 0.2 }}
               >
                 <Badge className="mb-4 bg-green-100 text-green-700 hover:bg-green-100 text-xs md:text-sm">
@@ -188,7 +203,7 @@ export default function HabitMateLanding() {
               </motion.div>
             </FadeIn>
 
-            <FadeIn delay={0.4}>
+            <FadeIn delay={isMobile ? 0.2 : 0.4}>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight">
                 Crea hábitos{" "}
                 <motion.span
@@ -196,9 +211,13 @@ export default function HabitMateLanding() {
                     className:
                       "bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent",
                   } as HTMLMotionProps<"span">)}
-                  animate={{
-                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                  }}
+                  animate={
+                    !isMobile
+                      ? {
+                          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                        }
+                      : {}
+                  }
                   transition={{
                     duration: 3,
                     repeat: Number.POSITIVE_INFINITY,
@@ -210,7 +229,7 @@ export default function HabitMateLanding() {
               </h1>
             </FadeIn>
 
-            <FadeIn delay={0.6}>
+            <FadeIn delay={isMobile ? 0.3 : 0.6}>
               <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 md:mb-8 leading-relaxed px-4 sm:px-0">
                 Sigue tu progreso, mantente enfocado y mejora cada día con
                 HabitMate. La aplicación que convierte tus objetivos en rutinas
@@ -218,10 +237,10 @@ export default function HabitMateLanding() {
               </p>
             </FadeIn>
 
-            <FadeIn delay={0.8}>
+            <FadeIn delay={isMobile ? 0.4 : 0.8}>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start px-4 sm:px-0">
                 <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileHover={!isMobile ? { scale: 1.05, y: -2 } : {}}
                   whileTap={{ scale: 0.95 }}
                   className="w-full sm:w-auto"
                 >
@@ -229,11 +248,11 @@ export default function HabitMateLanding() {
                     size="lg"
                     className="w-full sm:w-auto bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white px-6 md:px-8 py-3 shadow-lg hover:shadow-xl transition-shadow"
                   >
-                    Empezar ahora
+                    <Link href="/dashboard">Empezar ahora</Link>
                   </Button>
                 </motion.div>
                 <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileHover={!isMobile ? { scale: 1.05, y: -2 } : {}}
                   whileTap={{ scale: 0.95 }}
                   className="w-full sm:w-auto"
                 >
@@ -249,51 +268,59 @@ export default function HabitMateLanding() {
             </FadeIn>
           </div>
 
-          <FadeIn delay={1} direction="right" className="order-1 lg:order-2">
+          <FadeIn
+            delay={isMobile ? 0.5 : 1}
+            direction="right"
+            className="order-1 lg:order-2"
+          >
             <div className="relative px-4 sm:px-0">
               <motion.div
                 {...({ className: "relative z-10" } as HTMLMotionProps<"div">)}
-                whileHover={{ scale: 1.02, rotateY: 5 }}
+                whileHover={!isMobile ? { scale: 1.02, rotateY: 5 } : {}}
                 transition={{ duration: 0.3 }}
               >
                 <Image
-                  src="/placeholder.svg?height=500&width=600"
+                  src="/app-preview.png"
                   alt="HabitMate App Preview"
                   width={600}
                   height={500}
                   className="rounded-2xl shadow-2xl w-full h-auto max-w-md mx-auto lg:max-w-none"
                 />
               </motion.div>
-              <motion.div
-                {...({
-                  className:
-                    "absolute -top-4 -right-4 w-48 h-48 md:w-72 md:h-72 bg-gradient-to-r from-green-200 to-blue-200 rounded-full blur-3xl opacity-30",
-                } as HTMLMotionProps<"div">)}
-                animate={{
-                  scale: [1, 1.1, 1],
-                  rotate: [0, 180, 360],
-                }}
-                transition={{
-                  duration: 20,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "linear",
-                }}
-              ></motion.div>
-              <motion.div
-                {...({
-                  className:
-                    "absolute -bottom-4 -left-4 w-48 h-48 md:w-72 md:h-72 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30",
-                } as HTMLMotionProps<"div">)}
-                animate={{
-                  scale: [1.1, 1, 1.1],
-                  rotate: [360, 180, 0],
-                }}
-                transition={{
-                  duration: 15,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "linear",
-                }}
-              ></motion.div>
+              {!isMobile && (
+                <>
+                  <motion.div
+                    {...({
+                      className:
+                        "absolute -top-4 -right-4 w-48 h-48 md:w-72 md:h-72 bg-gradient-to-r from-green-200 to-blue-200 rounded-full blur-3xl opacity-30",
+                    } as HTMLMotionProps<"div">)}
+                    animate={{
+                      scale: [1, 1.1, 1],
+                      rotate: [0, 180, 360],
+                    }}
+                    transition={{
+                      duration: 20,
+                      repeat: Number.POSITIVE_INFINITY,
+                      ease: "linear",
+                    }}
+                  ></motion.div>
+                  <motion.div
+                    {...({
+                      className:
+                        "absolute -bottom-4 -left-4 w-48 h-48 md:w-72 md:h-72 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30",
+                    } as HTMLMotionProps<"div">)}
+                    animate={{
+                      scale: [1.1, 1, 1.1],
+                      rotate: [360, 180, 0],
+                    }}
+                    transition={{
+                      duration: 15,
+                      repeat: Number.POSITIVE_INFINITY,
+                      ease: "linear",
+                    }}
+                  ></motion.div>
+                </>
+              )}
             </div>
           </FadeIn>
         </div>
@@ -549,7 +576,7 @@ export default function HabitMateLanding() {
                 size="lg"
                 className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white px-12 py-4 text-lg shadow-lg hover:shadow-xl transition-shadow"
               >
-                Comenzar gratis
+                <Link href="/dashboard">Comenzar gratis</Link>
               </Button>
             </motion.div>
           </motion.div>

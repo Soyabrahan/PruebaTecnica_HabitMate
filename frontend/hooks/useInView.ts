@@ -2,30 +2,43 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export function useInView(threshold = 0.1) {
+export function useInView(options = {}) {
+  const [ref, setRef] = useState<HTMLElement | null>(null);
   const [isInView, setIsInView] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-        }
-      },
-      { threshold }
-    );
+    if (!ref) return;
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsInView(entry.isIntersecting);
+    }, options);
+
+    observer.observe(ref);
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (ref) {
+        observer.unobserve(ref);
       }
     };
-  }, [threshold]);
+  }, [ref, options]);
 
-  return [ref, isInView] as const;
+  return [setRef, isInView];
+}
+
+// Hook para detectar si es móvil
+export function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
+
+  return isMobile;
 }
