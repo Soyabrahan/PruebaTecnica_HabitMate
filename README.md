@@ -141,26 +141,12 @@ El proyecto está desplegado en Render con la siguiente configuración:
 - **URL:** [https://pruebatecnica-habitmate-backend.onrender.com](https://pruebatecnica-habitmate-backend.onrender.com)
 - **Build Command:** `cd backend && npm install && npm run build`
 - **Start Command:** `cd backend && npm run start:prod`
-- **Variables de entorno:**
-  ```env
-  DB_HOST=dpg-d17jmafdiees7386o6u0-a
-  DB_PORT=5432
-  DB_USERNAME=abrahan
-  DB_PASSWORD=utsBDJoC2gb0AAL8AU1eAWpBXkn1Yc0P
-  DB_DATABASE=portafolio_3gra
-  NODE_ENV=production
-  PORT=3000
-  ```
 
 #### Frontend (Static Site)
 - **URL:** [https://pruebatecnica-habitmate.onrender.com](https://pruebatecnica-habitmate.onrender.com)
 - **Build Command:** `cd frontend && npm install && npm run build`
 - **Publish Directory:** `frontend/out`
-- **Variables de entorno:**
-  ```env
-  NEXT_PUBLIC_API_URL=https://pruebatecnica-habitmate-backend.onrender.com
-  ```
-
+- 
 ### Para replicar el despliegue
 
 #### 1. Base de datos PostgreSQL
